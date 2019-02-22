@@ -98,7 +98,7 @@ class LinkList
 }
 
 /**
- * 线性表的单链表存储结构
+ * 结点
  */
 class Node {
     private $data; //存储数据
