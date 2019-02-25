@@ -120,7 +120,6 @@ class Node
     }
 }
 
-
 $list = new DoubleLinkList();
 $list->insert(1,2);
 $list->insert(1,3);
