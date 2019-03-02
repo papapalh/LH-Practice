@@ -7,30 +7,31 @@
  * 输入: [4,1,2,1,2] 输出: 4
  */
 
-class Solution {
-
+class Solution
+{
     /* 
      * HASH 表做法
      * 用时 76 ms
      */
-    // function singleNumber($nums) {
-    //     foreach ($nums as $n) {
-    //         if (isset($arrOutput[(string)$n])) {
-    //             unset($arrOutput[(string)$n]);
-    //             continue;
-    //         }    
-    //         $arrOutput[(string)$n] = $n;
-    //     }
+    function singleNumberHash($nums)
+    {
+        foreach ($nums as $n) {
+            if (isset($arrOutput[(string)$n])) {
+                unset($arrOutput[(string)$n]);
+                continue;
+            }
+            $arrOutput[(string)$n] = $n;
+        }
 
-    //     return current($arrOutput);
-    // }
+        return current($arrOutput);
+    }
 
     /* 
      * 位运算
      * 用时 40 ms
      */
-    function singleNumber($nums) {
-
+    function singleNumber($nums)
+    {
         foreach ($nums as $n) {
             $sum ^= $n;
             var_dump($sum);
@@ -41,5 +42,6 @@ class Solution {
 }
 
 $arr = [2,2,1];
-$S = new Solution();
-echo $S->singleNumber($arr);
+$s = new Solution();
+echo $s->singleNumberHash($arr);
+echo $s->singleNumber($arr);
