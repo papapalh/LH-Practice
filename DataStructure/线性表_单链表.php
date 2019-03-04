@@ -23,7 +23,7 @@ class LinkList
    
     /**
      * @desc
-     * 		得到第$i个元素 时间复杂度O(n)
+     *         得到第$i个元素 时间复杂度O(n)
      * @param int $i
      */
     public function getElem($i) {
@@ -44,8 +44,8 @@ class LinkList
    
     /**
      * $desc
-     *         在$i个位置之前插入数据$data 		时间复杂度 O(n)
-     *         在此插入多个结点时（$data多个时），	时间复杂度 第一次为O(n),后面为O(1)
+     *         在$i个位置之前插入数据$data         时间复杂度 O(n)
+     *         在此插入多个结点时（$data多个时），    时间复杂度 第一次为O(n),后面为O(1)
      * @param int $i
      * @param $data
      */
@@ -71,30 +71,30 @@ class LinkList
     
    /**
     * @desc  
-    * 		删除第$i 个数据结点
-    * 		从$headNode之后的第一个结点才是第1个结点，以此类推 
-    *		时间复杂度O(n)
+    *         删除第$i 个数据结点
+    *         从$headNode之后的第一个结点才是第1个结点，以此类推 
+    *        时间复杂度O(n)
     *
-    *		如果在$i位置开始，删除连续的,第一次为O(n),后续为O(1)
-    *		备注：如果仅仅是该方法的实现，是没有体现出单链表有啥子好处，因为调用10次delete()都是O(n),除非在该方法里进行改造。
-    *			 但是，如果改造该方法，我们也可以改造顺序结构的delete()方法，也可以实现连接删除，而不用每次都遍历
+    *        如果在$i位置开始，删除连续的,第一次为O(n),后续为O(1)
+    *        备注：如果仅仅是该方法的实现，是没有体现出单链表有啥子好处，因为调用10次delete()都是O(n),除非在该方法里进行改造。
+    *             但是，如果改造该方法，我们也可以改造顺序结构的delete()方法，也可以实现连接删除，而不用每次都遍历
     * @param int $i
     */
-	public function delete($i) {
-		$j = 1;
-		$node = $this->headNode; // 指向头结点
-		while($node && $j<$i) {
-			$node = $node->getNext();
-			++ $j;
-		}
-		if(!$node || $j>$i) {
-			return false;
-		}		
-		$delNode = $node->getNext(); 		// 需要删除的结点
-		$node->setNext($delNode->getNext());// 删除结点的后继结点赋值给结点
-		unset($delNode);					// 清除不需要的结点
-		return true;
-	}
+    public function delete($i) {
+        $j = 1;
+        $node = $this->headNode; // 指向头结点
+        while($node && $j<$i) {
+            $node = $node->getNext();
+            ++ $j;
+        }
+        if(!$node || $j>$i) {
+            return false;
+        }        
+        $delNode = $node->getNext();         // 需要删除的结点
+        $node->setNext($delNode->getNext());// 删除结点的后继结点赋值给结点
+        unset($delNode);                    // 清除不需要的结点
+        return true;
+    }
 }
 
 /**

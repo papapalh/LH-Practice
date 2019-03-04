@@ -29,11 +29,11 @@ class DoubleLinkList
      */
     public function isEmpty()
     {
-    	if (!$this->headNode->getNext()) {
-    		return FALSE;
-    	}
+        if (!$this->headNode->getNext()) {
+            return FALSE;
+        }
 
-    	return TRUE;
+        return TRUE;
     }
 
     /**
@@ -42,14 +42,14 @@ class DoubleLinkList
      */
     public function getLength()
     {
-    	$count = 0;
-    	$node  = $this->headNode;
+        $count = 0;
+        $node  = $this->headNode;
 
-    	while ($node = $node->getNext()) {
-    		$count++;
-    	}
+        while ($node = $node->getNext()) {
+            $count++;
+        }
 
-    	return $count;
+        return $count;
     }
 
     /**
@@ -58,7 +58,7 @@ class DoubleLinkList
      */
     public function insert($i, $data)
     {
-    	$j = 1; //从第一个元素开始遍历
+        $j = 1; //从第一个元素开始遍历
         $node = $this->headNode; // 指向头结点
        
         while($node && ($j > $i)) {

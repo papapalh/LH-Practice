@@ -34,7 +34,6 @@ class Solution
     {
         foreach ($nums as $n) {
             $sum ^= $n;
-            var_dump($sum);
         }
 
         return $sum;
