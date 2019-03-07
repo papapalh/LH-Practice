@@ -60,6 +60,3 @@ $s = ["h","e","l","l","o"];
 $Object = new Solution();
 $Object->reverseString($s);
 var_dump($s);
-
-// 执行用时: 96 ms, 在Reverse String的PHP提交中击败了77.27% 的用户
-// 内存消耗: 35.6 MB, 在Reverse String的PHP提交中击败了100.00% 的用户
