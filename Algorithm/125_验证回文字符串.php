@@ -23,21 +23,22 @@ class Solution
      * 详解
      *     https://www.cnblogs.com/25-lH/p/9565117.html
      */
-    function isPalindrome($s) {
+    function isPalindrome($s)
+    {
+        $length = strlen($s); // 处理特殊符号
+        $str    = '';
 
-        // 处理特殊符号
-        $legth = strlen($s);
-        for ($i = 0; $i < $legth; $i++) {
+        for ($i = 0; $i < $length; $i++) {
             if (preg_match('/[a-zA-Z0-9]/', $s[$i])) {
                 $str .= strtolower($s[$i]);
             }
         }
 
         // 回文验证
-        $legth  = strlen($str);
-        $middle = floor($legth / 2);
+        $length  = strlen($str);
+        $middle = floor($length / 2);
         for ($i=0; $i < $middle; $i++) { 
-            if ($str[$i] != $str[$legth - $i - 1]) {
+            if ($str[$i] != $str[$length - $i - 1]) {
                 return FALSE;
             }
         }
