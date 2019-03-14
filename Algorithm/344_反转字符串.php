@@ -10,7 +10,6 @@
  */
 class Solution
 {
-
     /**
      * 思路1
      *    新开辟一个数组，让原数组倒叙输出，则完成反转字符效果
@@ -20,7 +19,7 @@ class Solution
      *    执行用时: 96 ms, 在Reverse String的PHP提交中击败了77.27% 的用户
      *    内存消耗: 35.4 MB, 在Reverse String的PHP提交中击败了100.00% 的用户
      */
-    function reverseString(&$s)
+    function reverseString1(&$s)
     {
         $count  = count($s) - 1;
         $result = []; 
