@@ -1,8 +1,8 @@
 <?php
 /**
  * 题目
- * 		实现 strStr() 函数。
- * 		给定一个 haystack 字符串和一个 needle 字符串，在 haystack 字符串中找出 needle 字符串出现的第一个位置 (从0开始)。如果不存在，则返回  -1。
+ *         实现 strStr() 函数。
+ *         给定一个 haystack 字符串和一个 needle 字符串，在 haystack 字符串中找出 needle 字符串出现的第一个位置 (从0开始)。如果不存在，则返回  -1。
  * 示例
  *    输入: haystack = "hello", needle = "ll"
  *    输出: 2
@@ -20,7 +20,7 @@ class Solution
      * 时间复杂度
      *    O(n)
      */
-    function strStr($haystack, $needle)
+    function strStr1($haystack, $needle)
     {
         if (!$needle) {
             return 0;
@@ -46,7 +46,7 @@ class Solution
      *    利用已经部分匹配这个有效信息，保持i指针不回溯，通过修改j指针，让模式串尽量地移动到有效的位置。
      * 具体算法示例
      *    输入 haystack = "hello world", needle = "orld"
-     *    	1:循环 haystack 字符串,既然要找匹配 'or' 的字符串,那么开头肯定是为 'o' 的。
+     *        1:循环 haystack 字符串,既然要找匹配 'or' 的字符串,那么开头肯定是为 'o' 的。
      *         根据这个，我们找到了下标为 5 的以 'o' 开头的。
      *      2:
      * 耗时
@@ -70,12 +70,12 @@ class Solution
         while ($i <= $length) {
 
             if ($length - $i < $target_length) {
-        		return -1;
-        	}
+                return -1;
+            }
             $str = '';
             
             if ($haystack[$i] == $needle[0]) {
-            	$kmp = 0;
+                $kmp = 0;
                 for ($j = 0; $j < $target_length; $j++) {
                     $str .= $haystack[$i + $j];
                     if (($haystack[$i + $j] == $needle[0]) && !$kmp) {
@@ -97,9 +97,3 @@ class Solution
         return -1;
     }
 }
-
-
-$s = ["h","e","l","l","o"];
-$Object = new Solution();
-$Object->reverseString($s);
-var_dump($s);
