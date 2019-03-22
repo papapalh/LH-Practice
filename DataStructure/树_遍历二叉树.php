@@ -92,7 +92,6 @@ class Tree
      * 层级遍历
      * 遍历顺序为 1-2-3-4-5-6-7
      */
-    public static $list = [];
     public function hierarchy($tree)
     {
         if (!$tree->val) {
@@ -100,24 +99,44 @@ class Tree
         }
 
         // 根节点推入队列
-        self::$list[] = $tree;
+        $list[] = $tree;
 
         // 循环队列
-        while (self::$list) {
-            $list = [];
-            foreach (self::$list as $v) {
+        while ($list) {
+            $tmpList = [];
+            foreach ($list as $v) {
                 echo $v->val, "\n";
 
                 if ($v->left->val) {
-                    $list[] = $v->left;
+                    $tmpList[] = $v->left;
                 }
 
                 if ($v->right->val) {
-                    $list[] = $v->right;
+                    $tmpList[] = $v->right;
                 }
             }
-            self::$list = $list;
+            $list = $tmpList;
         }
+    }
+
+    /**
+     * 递归层级遍历
+     * 遍历顺序为 1-2-3-4-5-6-7
+     */
+    public static $depth = 0;
+    function hierarchy2($root)
+    {
+        self::$depth++;
+        if(!$root) {
+            goto out;
+        }
+        else{
+            echo $root->val,'-',self::$depth,"\n";
+            $this->hierarchy2($root->left);
+            $this->hierarchy2($root->right);
+        }
+        out:
+        self::$depth--;
     }
 }
 
@@ -131,3 +150,5 @@ $tree = $t->createTree();
 //$t->backOrder($tree);
 
 //$t->hierarchy($tree);
+
+$t->hierarchy2($tree);
