@@ -31,6 +31,8 @@ class Tree
         $head->left->val = 2;
         $head->left->left = new Node();
         $head->left->left->val = 4;
+        $head->left->left->left = new Node();
+        $head->left->left->left->val = 8;
         $head->left->right = new Node();
         $head->left->right->val = 5;
 
@@ -138,6 +140,35 @@ class Tree
         out:
         self::$depth--;
     }
+
+    /**
+     * 获取全部二叉树路径
+     */
+    public static $path = [];
+    function hasPathSum($root)
+    {
+        if (!$root) {
+            return false;
+        }
+
+        $this->path($root, '');
+
+        return self::$path;
+    }
+    function path($root, $str)
+    {
+        $str .= $root->val;
+        if (!$root->right && !$root->left) {
+            self::$path[] = $str;
+        }
+
+        if ($root->left) {
+            $this->path($root->left,$str);
+        }
+        if ($root->right) {
+            $this->path($root->right,$str);
+        }
+    }
 }
 
 $t = new Tree();
@@ -151,4 +182,6 @@ $tree = $t->createTree();
 
 //$t->hierarchy($tree);
 
-$t->hierarchy2($tree);
+// $t->hierarchy2($tree);
+
+$t->hasPathSum($tree);
