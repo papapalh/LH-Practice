@@ -31,11 +31,8 @@ class Tree
         $head->left->val = 2;
         $head->left->left = new Node();
         $head->left->left->val = 4;
-        $head->left->left->left = new Node();
-        $head->left->left->left->val = 8;
         $head->left->right = new Node();
         $head->left->right->val = 5;
-
 
         $head->right = new Node();
         $head->right->val = 3;
@@ -169,6 +166,11 @@ class Tree
             $this->path($root->right,$str);
         }
     }
+
+    /**
+     * 获取二叉树路径上的值
+     */
+    public static $pathSum = [];
 }
 
 $t = new Tree();
