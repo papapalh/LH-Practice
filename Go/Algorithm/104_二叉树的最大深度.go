@@ -18,7 +18,6 @@ import (
  *       15   7
  *     返回它的最大深度 3 。
  */
-var max int
 func main() {
 	p := TreeNode{Val:1}
 	p.Left = &TreeNode{Val:2}
@@ -32,8 +31,6 @@ func main() {
 	c := maxDepth(&p)
 
 	fmt.Printf("-", c)
-	max = 0
-	fmt.Printf("-", max)
 }
 type TreeNode struct {
 	Val int
@@ -57,26 +54,24 @@ func maxDepth(root *TreeNode) int {
 		return 1
 	}
 
-	max = 0
+	max := 0
 
-	xx(root, 0)
+	if root.Left != nil {
+		max = maxInt(maxDepth(root.Left), max)
+	}
 
-	return max
+	if root.Right != nil {
+		max = maxInt(maxDepth(root.Right), max)
+	}
+
+	return max + 1
 
 }
 
-func xx(root *TreeNode, depth int) {
-
-	if root == nil {
-		if depth > max {
-			max = depth
-		}
-
-		return
+func maxInt (x int, y int) int {
+	if x > y {
+		return x
 	}
 
-	depth++
-
-	xx(root.Left, depth)
-	xx(root.Right, depth)
+	return y
 }
