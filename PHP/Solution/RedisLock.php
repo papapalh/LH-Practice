@@ -44,19 +44,14 @@ class redisLock
         $lockKey = $key . '_lock';
 
         // 通过setNx命令拿到锁
-        $lock = $this->reids->set($lockKey, 1, ['NX', 'PX' => $ttl]);
-
-        // 拿到锁则直接返回
-        if ($lock) {
-            return true;
-        }
+        $lock = null;
 
         // 没有拿到锁，则一直循环等待锁资源释放
         while (!$lock) {
-            $lock = $this->reids->set($key, 1, ['NX', 'PX' => $ttl]);
+            $lock = $this->reids->set($lockKey, 1, ['NX', 'PX' => $ttl]);
         }
 
-        return $lock;
+        return true;
     }
 
     /**
