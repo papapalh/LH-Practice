@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
+	fmt.Println("管道问题还需要之后在了解")
 	fmt.Println("Command 执行程序")
 	aa := exec.Command("echo", "-n", `{"Name": "Bob", "Age": 32}`) // 使用给出的参数执行name指定的程序
 	fmt.Println("    .Path   执行命令路径")
@@ -22,6 +23,8 @@ func main() {
 		fmt.Println(err)
 		return
 	}
+
+	//runtime.BlockProfile()
 
 	var person struct {
 		Name string
