@@ -22,5 +22,5 @@ func main() {
 	fmt.Println("TrimLeft(s,cutset)   将s左端所有cutset都去掉                   ", strings.TrimLeft(" xxxX", " "))
 	fmt.Println("TrimRight(s,cutset)  将s右端所有cutset都去掉                   ", strings.TrimRight("xxxX ", " "))
 	fmt.Println("Split(s,sep)         将s以sep方式切割                          ", strings.Split("x-x-x-x", "-"))
-	fmt.Println("Split(a,sep)         将a以sep方式组合                          ", strings.Join([]string{"a","b","a","b"}, "-"))
+	fmt.Println("Join(a,sep)          将a以sep方式组合                          ", strings.Join([]string{"a","b","a","b"}, "-"))
 }
