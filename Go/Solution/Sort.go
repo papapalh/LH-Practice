@@ -18,6 +18,11 @@ import "fmt"
 func main() {
 	BubbleSort()
 	SelectSort()
+	InsertSort()
+	MergeSort()
+	QuickSort([]int{1, 2, 3, 4})
+	CountSort()
+	BucketSort()
 }
 
 /**
@@ -177,4 +182,126 @@ func MergeSort() {
 	}
 
 	fmt.Println(arr)
+}
+
+/**
+ * 思路
+ *     快速排序
+ *     本质是通过 二分法不断的对数列进行排序
+ *     快速排序基本上被认为在相同数量级中，平均性能最好的。
+ * 详解
+ *     在对数列进行排序时候，挑选一个基本数[flag][一般是第一个]把大于这个数的放右边，小于的放左边。
+ *     之后再不停的递归对数列排序，直到最后一个。
+ */
+func QuickSort(arr []int) []int {
+	//切片数量太少直接返回
+	if len(arr) <= 1 {
+		return arr
+	}
+
+	//随便选择一个，进行二分
+	flag := arr[0]
+	left := []int{}
+	right := []int{}
+
+	for i, v := range arr {
+
+		if i == 0 {
+			continue
+		}
+
+		if flag > v {
+			left = append(left, v)
+		} else {
+			right = append(right, v)
+		}
+	}
+
+	left = QuickSort(left)
+	right = QuickSort(right)
+
+	res := []int{}
+	res = append(res, left...)
+	res = append(res, flag)
+	res = append(res, right...)
+
+	return res
+}
+
+/**
+ * 思路
+ *     计数排序
+ *     类似哈希表
+ * 详解
+ *     首先通过O（n）计算数组出先最大最小，以确定循环次数
+ *     开辟额外空间存储每个元素出现位置和次数。
+ *     根据最大最小区间循环输出，最后排序完成
+ * 问题
+ *     不适合离散度过大的数组
+ */
+func CountSort() {
+
+	arr := []int{1, 2, 4, 6, 8, 10, 3, 1, 0, 4, 6}
+
+	min := 0
+	max := 0
+	bucket := map[int][]int{}
+
+	res := []int{}
+
+	//O(N)遍历最大最小
+	for _, v := range arr {
+		if v > max {
+			max = v
+		}
+
+		if min > v {
+			min = v
+		}
+		//并放入对应的桶内
+		bucket[v] = append(bucket[v], v)
+	}
+
+	//确定最大最小之后，遍历桶
+	for i := min; i <= max; i++ {
+		if len(bucket[i]) > 0 {
+			res = append(res, bucket[i]...)
+		}
+	}
+
+	fmt.Println(res)
+}
+
+/**
+ * 思路
+ *     桶排序
+ *     使用于排序区间不大的排序
+ * 步骤
+ *     把每个元素放入对应的桶内(类型哈希表)
+ *     最后按照顺序把每个桶的元素拿出来，完成排序
+ */
+func BucketSort() {
+	arr := []int{1, 2, 4, 6, 8, 10, 3, 1, 0, 4, 6}
+	bucket := map[int][]int{}
+
+	max := 0
+	res := []int{}
+
+	//O(N)遍历最大最小
+	for _, v := range arr {
+		if v > max {
+			max = v
+		}
+		//并放入对应的桶内
+		bucket[v] = append(bucket[v], v)
+	}
+
+	//确定最大最小之后，遍历桶
+	for i := 0; i <= max; i++ {
+		if len(bucket[i]) > 0 {
+			res = append(res, bucket[i]...)
+		}
+	}
+
+	fmt.Println(res)
 }
