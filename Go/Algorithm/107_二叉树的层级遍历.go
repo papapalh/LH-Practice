@@ -47,41 +47,49 @@ type TreeNode struct {
  *    执行用时 :0 ms, 在所有Go提交中击败了100.00%的用户
  *    内存消耗 :6.2 MB, 在所有Go提交中击败了45.98%的用户
  */
-var tree = [][]int{}
 func levelOrderBottom(root *TreeNode) [][]int {
 
-	tree = [][]int{}
+	res := make([][]int, 0)
 
 	if root == nil {
-		return tree
-	}
-	x(root, 0)
-
-	return reverse(tree)
-}
-
-func x (root *TreeNode, depth int) {
-	if root == nil {
-		return
+		return nil
 	}
 
-	if depth >= len(tree) {
-		tree = append(tree, []int{})
+	depth := 0 //深度
+	treePool := map[int][]*TreeNode{}
+
+	treePool[depth] = []*TreeNode{root}
+
+	for {
+		//数组超限判断
+		if len(treePool[depth]) == 0 {
+			break
+		}
+
+		for _, node := range treePool[depth] {
+
+			if node.Left != nil {
+				treePool[depth+1] = append(treePool[depth+1], node.Left)
+			}
+
+			if node.Right != nil {
+				treePool[depth+1] = append(treePool[depth+1], node.Right)
+			}
+		}
+		depth++
 	}
 
-	tree[depth] = append(tree[depth], root.Val)
+	//反转数组
+	for i := len(treePool) - 1; i >= 0; i-- {
 
-	depth++
+		tmp := []int{}
 
-	x(root.Left, depth)
-	x(root.Right, depth)
-}
+		for _, node := range treePool[i] {
+			tmp = append(tmp, node.Val)
+		}
 
-func reverse(trees [][]int) [][]int {
-	n := len(trees)
-	reversed := make([][]int, 0, n)
-	for i:=n-1;i>=0;i-- {
-		reversed = append(reversed, trees[i])
+		res = append(res, tmp)
 	}
-	return reversed
+
+	return res
 }
