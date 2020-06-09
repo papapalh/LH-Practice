@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 )
+
 /**
  * 题目
  *    给定一个二叉树，返回其节点值自底向上的层次遍历。 （即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历）
@@ -21,22 +22,24 @@ import (
  * ]
  */
 func main() {
-	p := TreeNode{Val:3}
-	p.Left = &TreeNode{Val:9}
+	p := TreeNode{Val: 3}
+	p.Left = &TreeNode{Val: 9}
 
-	p.Right = &TreeNode{Val:20}
-	p.Right.Left = &TreeNode{Val:15}
-	p.Right.Right = &TreeNode{Val:7}
+	p.Right = &TreeNode{Val: 20}
+	p.Right.Left = &TreeNode{Val: 15}
+	p.Right.Right = &TreeNode{Val: 7}
 
 	c := levelOrderBottom(&p)
 
 	fmt.Printf("-", c)
 }
+
 type TreeNode struct {
-	Val int
-	Left *TreeNode
+	Val   int
+	Left  *TreeNode
 	Right *TreeNode
 }
+
 /**
  * 思路
  *     层级遍历，数组翻转
