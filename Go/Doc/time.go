@@ -11,17 +11,17 @@ const (
 
 /*
  * 时间单位
- * 		1s  = 1000ms
- * 		1ms = 1000us
- * 		1us = 1000ns
+ *		1s  = 1000ms
+ *		1ms = 1000us
+ *		1us = 1000ns
  * 时区
  * 		GMT 林威治标准时间
- *      UTC 世界协调时间(和GMT差不多)
- *      CST
- *      	Central Standard Time (USA) UT-6:00        美国
- *  		Central Standard Time (Australia) UT+9:30  澳大利亚
- *          China Standard Time UT+8:00                中国
- *          Cuba Standard Time UT-4:00                 古巴
+ *		UTC 世界协调时间(和GMT差不多)
+ *		CST
+ *			Central Standard Time (USA) UT-6:00        美国
+ * 			Central Standard Time (Australia) UT+9:30  澳大利亚
+ *			China Standard Time UT+8:00                中国
+ *			Cuba Standard Time UT-4:00                 古巴
  */
 func main() {
 
@@ -49,7 +49,7 @@ func main() {
 	 */
 	t := time.Now()
 
-	//获取时间详细信息
+	// 获取时间详细信息
 	// 年 Year
 	// 月 Month
 	// 日 Day
@@ -58,6 +58,7 @@ func main() {
 	// 秒 Second
 	// 当前时间是星期几 t.Weekday()
 	// 是一年中的第几天 t.YearDay()
+	// 时间戳
 	fmt.Println(fmt.Sprintf("当前时间 %d-%d-%d %d:%d:%d \n 当前时间是星期%d \n 是一年中的第%d天 \n 当前时间戳为%d",
 		t.Year(),
 		int(t.Month()),
