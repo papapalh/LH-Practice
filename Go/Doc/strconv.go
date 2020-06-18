@@ -8,11 +8,13 @@ import (
 //strconv包实现了基本数据类型和其字符串表示的相互转换。
 func main() {
 
-	//布尔->字符串
+	/*
+	 * 布尔->字符串
+	 */
 	fmt.Println(strconv.FormatBool(true))
 
 	/*
-	 * 数字 -> 字符串 相关
+	 * 数字 -> 字符串
 	 */
 	//数字(进制)->字符串
 	fmt.Println(strconv.FormatInt(54, 10))

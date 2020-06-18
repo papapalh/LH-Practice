@@ -6,52 +6,101 @@ import (
 )
 
 const (
-	BASE = "2019-09-09"
+	BASE = "2006-01-02 15:04:05"
 )
 
 /*
- * 1s  = 1000ms
- * 1ms = 1000us
- * 1us = 1000ns
+ * 时间单位
+ * 		1s  = 1000ms
+ * 		1ms = 1000us
+ * 		1us = 1000ns
+ * 时区
+ * 		GMT 林威治标准时间
+ *      UTC 世界协调时间(和GMT差不多)
+ *      CST
+ *      	Central Standard Time (USA) UT-6:00        美国
+ *  		Central Standard Time (Australia) UT+9:30  澳大利亚
+ *          China Standard Time UT+8:00                中国
+ *          Cuba Standard Time UT-4:00                 古巴
  */
 func main() {
-	fmt.Println("Time 方法:")
-	fmt.Println("    Weekday(a)  返回星期a的英文名                                        ", time.Weekday(0))
-	fmt.Println("    Month(a)    返回月份a的英文名                                        ", time.Month(1))
 
-	fmt.Println("    Date()      构建一个时间点                                           ", time.Date(2020, 1,2,1,1,1,1,time.Local))
+	/*
+	 * Time 对象初始化
+	 */
+	//字符串 -> Time 对象(格式必须完全一样)
+	fmt.Println(time.Parse(BASE, "2020-01-08 18:01:48"))
 
-	fmt.Println("    Now()       返回当前本地时间                                         ", time.Now())
+	//字符串 -> Time 对象(格式必须完全一样)(加入时区配置)
+	loc, _ := time.LoadLocation("Asia/Shanghai")
+	fmt.Println(time.ParseInLocation(BASE, "2020-01-08 18:01:48", loc))
 
-	fmt.Print("    Parse()     解析一个格式化字符时间串                                  ")
-	e, _ := time.Parse(BASE, "2019-01-01")
-	fmt.Println(e)
+	//时间戳 -> Time 对象(秒+纳秒ns)
+	fmt.Println(time.Unix(1578477708, 0))
 
-	fmt.Print("    Unix()      根据时间戳构建一个Time对象(秒+纳秒ns)                     ")
-	f := time.Unix(1578477708,0)
-	fmt.Println(f)
+	//当前时间 -> Time 对象
+	fmt.Println(time.Now())
 
-	fmt.Println("Time 对象:")
-	fmt.Println("    Local   返回地点和时区信息                                           ", f.Local())
-	fmt.Print("    Zone    返回时区信息                                                  ")
-		fmt.Println(f.Zone())
-	fmt.Println("    Equal   判断两个时间是否相同(考虑时区影响)                           ", f.Equal(time.Unix(1578477708,0)))
-	fmt.Println("    Before  判断时间在传入时间之前，f在X之前,返回真,否则假(考虑时区影响) ", f.Before(time.Unix(1578477708,0)))
-	fmt.Println("    After   判断时间在传入时间之后，f在X之后,返回真,否则假(考虑时区影响) ", f.After(time.Unix(1578477708,0)))
-	fmt.Print("    Date    返回时间点f对应的年、月、日。                                 ")
-		fmt.Println(f.Date())
-	fmt.Print("    Clock   返回时间点f对应的时、分、秒                                   ")
-		fmt.Println(f.Clock())
-	fmt.Println("    Year    返回时间点f对应的年                                          ", f.Year())
-	fmt.Println("    Month   返回时间点f对应的月                                          ", f.Month())
-	fmt.Println("    Day     返回时间点f对应的日                                          ", f.Day())
-	fmt.Println("    YearDay 返回时间点f对应一年的第几天                                  ", f.YearDay())
-	fmt.Println("    Weekday 返回时间点f对应一年的周几                                    ", f.Weekday())
+	//构造时间对象 -> 2020-01-02 03:04:05
+	fmt.Println(time.Date(2020, 1, 8, 18, 01, 48, 0, time.Local))
 
-	fmt.Println("    Hour    返回时间点f对应一天的第几小时                                ", f.Hour())
-	fmt.Println("    Minute  返回时间点f对应一年的第几分钟                                ", f.Minute())
-	fmt.Println("    Second  返回时间点f对应一年的第几秒                                  ", f.Second())
-	fmt.Println("    Format  格式化时间                                                   ", f.Format(BASE))
-	fmt.Println("    String  字符串的格式化时间                                           ", f.String())
+	/*
+	 * Time 方法
+	 */
+	t := time.Now()
+
+	//获取时间详细信息
+	// 年 Year
+	// 月 Month
+	// 日 Day
+	// 时 Hour
+	// 分 Minute
+	// 秒 Second
+	// 当前时间是星期几 t.Weekday()
+	// 是一年中的第几天 t.YearDay()
+	fmt.Println(fmt.Sprintf("当前时间 %d-%d-%d %d:%d:%d \n 当前时间是星期%d \n 是一年中的第%d天 \n 当前时间戳为%d",
+		t.Year(),
+		int(t.Month()),
+		t.Day(),
+		t.Hour(),
+		t.Minute(),
+		t.Second(),
+		int(t.Weekday()),
+		t.YearDay(),
+		t.Unix(),
+	))
+
+	//获取时间和时区详细信息
+	fmt.Println(t.Local())
+
+	//获取时区
+	fmt.Println(t.Zone())
+
+	//返回时间 [年 月 日]
+	fmt.Println(t.Date())
+
+	//返回时间 [时 分 秒]
+	fmt.Println(t.Clock())
+
+	//格式化时间输出 [不常用]
+	fmt.Println(t.String())
+
+	//Format格式化输出
+	fmt.Println(t.Format(BASE))
+
+	/*
+	 * 时间大小判断(考虑时区影响的比较)
+	 * 不推荐使用，推荐使用unix(时间戳比较)
+	 */
+	t1, _ := time.Parse(BASE, "2020-01-08 18:00:00")
+	t2, _ := time.Parse(BASE, "2020-01-08 17:00:00")
+
+	//t1 == t2 ?
+	fmt.Println(t1.Equal(t2))
+
+	// t1 < t2 ?
+	fmt.Println(t1.Before(t2))
+
+	// t1 > t2 ?
+	fmt.Println(t1.After(t2))
 }
-
