@@ -50,25 +50,16 @@ func main() {
 	t := time.Now()
 
 	// 获取时间详细信息
-	// 年 Year
-	// 月 Month
-	// 日 Day
-	// 时 Hour
-	// 分 Minute
-	// 秒 Second
-	// 当前时间是星期几 t.Weekday()
-	// 是一年中的第几天 t.YearDay()
-	// 时间戳
 	fmt.Println(fmt.Sprintf("当前时间 %d-%d-%d %d:%d:%d \n 当前时间是星期%d \n 是一年中的第%d天 \n 当前时间戳为%d",
-		t.Year(),
-		int(t.Month()),
-		t.Day(),
-		t.Hour(),
-		t.Minute(),
-		t.Second(),
-		int(t.Weekday()),
-		t.YearDay(),
-		t.Unix(),
+		t.Year(),         // 年 Year
+		int(t.Month()),   // 月 Month
+		t.Day(),          // 日 Day
+		t.Hour(),         // 时 Hour
+		t.Minute(),       // 分 Minute
+		t.Second(),       // 秒 Second
+		int(t.Weekday()), // 当前时间是星期几 t.Weekday()
+		t.YearDay(),      // 是一年中的第几天 t.YearDay()
+		t.Unix(),         // 时间戳
 	))
 
 	//获取时间和时区详细信息
