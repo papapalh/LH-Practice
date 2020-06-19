@@ -5,22 +5,100 @@ import (
 	"strings"
 )
 
+//strings包实现了用于操作字符的简单函数。
+//byte = uint8
+//rune = int32
 func main() {
-	fmt.Println("EqualFold(s,t)       判断两个字符串(utf-8)是否相同(忽略大小写) ", strings.EqualFold("x","X"))
-	fmt.Println("HasPrefix(s,prefix)  判断s是否有前缀字符串prefix               ", strings.HasPrefix("xxxX","xxx"))
-	fmt.Println("HasSuffix(s,prefix)  判断s是否有后缀字符串prefix               ", strings.HasSuffix("Xxxx","xxx"))
-	fmt.Println("Contains(s,substr)   判断字符串s是否包含子串substr             ", strings.Contains("xxxx","x"))
-	fmt.Println("Count(s,substr)      返回字符串s中有几个不重复的sep子串        ", strings.Count("xxxX","x"))
-	fmt.Println("Index(s,substr)      sep在s第一次出现的位置,不存在返回-1       ", strings.Index("xxxX","xxx"))
-	fmt.Println("LastIndex(s,substr)  sep在s最后一次出现的位置,不存在返回-1     ", strings.LastIndex("xxxX","xxx"))
-	fmt.Println("ToLower(s)           字母都转为对应的小写版本的拷贝            ", strings.ToLower("xxxX"))
-	fmt.Println("ToUpper(s)           字母都转为对应的大写版本的拷贝            ", strings.ToUpper("xxxX"))
-	fmt.Println("Repeat(s,count)      返回count个s串联的字符串                  ", strings.Repeat("abcd", 3))
-	fmt.Println("Replace(s,old,new,n) 将s中前n个old替换为new,n<0会替换所有old   ", strings.Replace("xxxX", "x", "a", -1))
-	fmt.Println("Trim(s,cutset)       将s前后端所有cutset都去掉                 ", strings.Trim(" xxxX ", " "))
-	fmt.Println("TrimSpace(s)         将s前后端所有空白去掉                     ", strings.TrimSpace(" xxxX "))
-	fmt.Println("TrimLeft(s,cutset)   将s左端所有cutset都去掉                   ", strings.TrimLeft(" xxxX", " "))
-	fmt.Println("TrimRight(s,cutset)  将s右端所有cutset都去掉                   ", strings.TrimRight("xxxX ", " "))
-	fmt.Println("Split(s,sep)         将s以sep方式切割                          ", strings.Split("x-x-x-x", "-"))
-	fmt.Println("Join(a,sep)          将a以sep方式组合                          ", strings.Join([]string{"a","b","a","b"}, "-"))
+
+	/*
+	 * 字符串基本方法
+	 */
+	//字符串是否相同(utf8)(忽略大小写)
+	fmt.Println(strings.EqualFold("x", "X"))
+
+	//字符串全小写(不修改原字符串)
+	fmt.Println(strings.ToLower("xxxX"))
+
+	//字符串全大写(不修改原字符串)
+	fmt.Println(strings.ToUpper("xxxX"))
+
+	/*
+	 * 字符串查找
+	 */
+	//判断前缀字符串prefix
+	fmt.Println(strings.HasPrefix("prefix-", "prefix"))
+
+	//判断后缀字符串prefix
+	fmt.Println(strings.HasSuffix("-prefix", "prefix"))
+
+	//判断子串substr
+	fmt.Println(strings.Contains("-prefix-", "prefix"))
+
+	//查找子串个数sep
+	fmt.Println(strings.Count("xxxX", "x"))
+
+	//子串sep第一次出现位置, 不存在返回-1
+	fmt.Println(strings.Index("xsepx", "sep"))
+
+	//子串sep最后一次出现位置, 不存在返回-1
+	fmt.Println(strings.LastIndex("xsepx", "sep"))
+
+	/*
+	 * 字符串操作
+	 */
+	//串联s个count字符串
+	fmt.Println(strings.Repeat("Repeat-", 3))
+
+	//去除前后空格
+	fmt.Println(strings.TrimSpace(" TrimSpace "))
+
+	//去除前后cutset
+	fmt.Println(strings.Trim("cutsetheiheiheicutset", "cutset"))
+
+	//去除前cutset
+	fmt.Println(strings.TrimLeft("cutsetheiheiheicutset", "cutset"))
+
+	//去除后cutset
+	fmt.Println(strings.TrimRight("cutsetheiheiheicutset", "cutset"))
+
+	//切割字符串
+	fmt.Println(strings.Split("x-x-x-x", "-"))
+
+	//组合字符串
+	fmt.Println(strings.Join([]string{"a", "b", "a", "b"}, "-"))
+
+	/*
+	 * 字符串替换
+	 */
+	//字符串替换 Replace(s,old,new,n) 将s中前n个old替换为new,n<0会替换所有old
+	fmt.Println(strings.Replace("ssssssss", "s", "x", -1))
+
+	/*
+	 * 字符串Reader
+	 */
+	//构建Reader
+	stringRander := strings.NewReader("123456789")
+
+	//未被读取的部分
+	fmt.Println(stringRander.Len())
+
+	//读取n个字节数据
+	n := make([]byte, 1)
+	stringRander.Read(n)
+	fmt.Println(string(n))
+
+	//读取Byte字节数据
+	fmt.Println(stringRander.ReadByte())
+
+	//读取Rune字节数据(4字节)
+	fmt.Println(stringRander.ReadRune())
+
+	//实现io.Seeker接口
+	// fmt.Println(stringRander.Seek())
+
+	//实现io.ReadAt
+	// fmt.Println(stringRander.ReadAt())
+
+	//实现io.WriteTo接口
+	// fmt.Println(stringRander.WriteTo())
 }

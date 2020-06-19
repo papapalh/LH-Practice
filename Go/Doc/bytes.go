@@ -7,131 +7,153 @@ import (
 
 const MinRead = 512
 
+//bytes包实现了操作[]byte的常用函数。本包的函数和strings包的函数相当类似。
+//byte = uint8
+//rune = int32
 func main() {
-	//byte = uint8
-	//rune = int32
-	//bytes包实现了操作[]byte的常用函数。本包的函数和strings包的函数相当类似。
+	/*
+	 * Byte基本方法
+	 */
+	//切片是否完全相同
+	fmt.Println(bytes.Equal([]byte{1}, []byte{1}))
 
-	// Compare 返回一个整数表示两个[]byte切片按字典序比较的结果（类同C的strcmp）。如果a==b返回0；如果a<b返回-1；否则返回+1。nil参数视为空切片。
-	var a []byte = []byte{1, 2, 3, 4, 5}
-	var b []byte = []byte{2, 3, 4}
+	//切片UTF8是够相同(将unicode大写、小写、标题三种格式字符视为相同)
+	fmt.Println(bytes.EqualFold([]byte{1}, []byte{1}))
 
-	fmt.Println("Equal(a,b)           判断两个切片的内容是否完全相同", "                   ", bytes.Equal(a, b))
+	//Byte -> Rune
+	fmt.Println(bytes.Runes([]byte{1}))
 
-	fmt.Println("Equal(s,t)           判断两个utf-8编码切片是否相同", "                    ", bytes.EqualFold(a, b))
+	/*
+	 * Byte查找
+	 */
+	s := []byte{1, 2, 3, 4, 5}
+	sep := []byte{1, 2}
+	//判断前缀切片sep
+	fmt.Println(bytes.HasPrefix(s, sep))
 
-	fmt.Println("Runes(s)             Runes函数返回和s等价的[]rune切片", "                 ", bytes.Runes(a))
+	//判断后缀切片sep
+	fmt.Println(bytes.HasSuffix(s, sep))
 
-	fmt.Println("HasPrefix(s,prefix)  判断s是否有前缀切片prefix", "                        ", bytes.HasPrefix(a, b))
-	fmt.Println("HasPrefix(s,suffix)  判断s是否有后缀切片prefix", "                        ", bytes.HasSuffix(a, b))
+	//判断子切片sep
+	fmt.Println(bytes.Contains(s, sep))
 
-	fmt.Println("Contains(a,b)        判断切片a是否包含子切片b", "                         ", bytes.Contains(a, b))
+	//查找子切片个数sep
+	fmt.Println(bytes.Count(s, sep))
 
-	fmt.Println("Count(s,sep)         Count计算s中有多少个不重叠的sep子切片。", "          ", bytes.Count(a, b))
+	//子切片sep在s中第一次出现的位置,不存在则返回-1
+	bytes.Index(s, sep)
 
-	fmt.Println("Index(s,sep)         子切片sep在s中第一次出现的位置,不存在则返回-1", "    ", bytes.Index(a, b))
+	//子切片sep最后一次出现位置, 不存在返回-1
+	fmt.Println(bytes.LastIndex(s, sep))
 
-	fmt.Println("IndexByte(s,c)       字符c在s中第一次出现的位置,不存在则返回-1", "        ", bytes.IndexByte(a, 2))
+	//字符99在s中第一次出现的位置,不存在则返回-1
+	fmt.Println(bytes.IndexByte(s, 99))
 
-	fmt.Println("IndexRune(s,r)       字符r在s中第一次出现的位置,不存在则返回-1", "        ", bytes.IndexRune(a, 2))
+	/*
+	 * Byte 操作
+	 */
+	//串联count个s
+	fmt.Println(bytes.Repeat(s, 2))
 
-	fmt.Println("IndexAny(s,char)     字符c在s第一次出现位置,不存在/空字符串返回-1", "     ", bytes.IndexAny(a, "2"))
+	/*
+	 * Byte替换
+	 */
+	//Byte替换 Replace(s,old,new,n) s中前n个不重叠old都替换为new的切片拷贝,n<0全部替换
+	fmt.Println(bytes.Replace(s, []byte{1}, []byte{2}, -1))
 
-	fmt.Println("LastIndex(s,sep)     切片sep在字符串s最后一次出现位置,不存在返回-1", "    ", bytes.LastIndex(a, b))
+	/*
+	 * Byte Reader
+	 */
+	n := make([]byte, 1)
+	data := []byte{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
 
-	fmt.Println("Contains(a,b)        字符c在s最后一次出现的位置,不存在/空字符串返回-1", " ", bytes.LastIndexAny(a, "2"))
+	//构建Reader
+	byteRead := bytes.NewReader(data)
 
-	fmt.Println("Repeat(a,count)      count个b串联形成的新的切片", "                       ", bytes.Repeat(a, 2))
+	//未被读取的部分
+	fmt.Println(byteRead.Len())
 
-	fmt.Println("Replace(s,old,new,n) s中前n个不重叠old都替换为new的切片拷贝,n<0全部替换", bytes.Replace(a, b, a, -1))
+	//读取 n Byte
+	byteRead.Read(n)
+	fmt.Println(n)
 
-	fmt.Println("Reader")
-	fmt.Println("    介绍：通过从一个[]byte读取数据，实现了io.Reader、io.Seeker、io.ReaderAt、io.WriterTo、io.ByteScanner、io.RuneScanner接口。")
+	//读取 byte
+	fmt.Println(byteRead.ReadByte())
 
-	data := []byte{1, 2, 3, 4, 5, 6, 7, 8}
-	read := make([]byte, 2)
+	//撤销读取的上一个Byte数据(也就是说下一个读取的还是这个)
+	fmt.Println(byteRead.UnreadByte())
 
-	re := bytes.NewReader(data)
-	fmt.Print("    NewReader(b) 通过[]byte创建 Reader                 ")
-	fmt.Println(re)
+	//读取 Rune(4字节)(主要读取是utf8字符串)
+	fmt.Println(byteRead.ReadRune())
 
-	fmt.Print("    Len()        返回r包含的切片中还没有被读取的部分   ")
-	fmt.Println(re.Len())
+	/*
+	 * Byte Buffer Reader
+	 * 一个实现了读写方法的可变大小的字节缓冲。本类型的零值是一个空的可用于读写的缓冲
+	 */
+	//构建Buffer
+	byteBuffer := bytes.NewBuffer(data)
 
-	fmt.Print("    Read(b)      读b字节数据                           ")
-	fmt.Println(re.Read(read))
+	//重设缓冲，因此会丢弃全部内容，等价于b.Truncate(0)
+	//byteBuffer.Reset()
 
-	fmt.Print("    Read(b)      读byte字节数据                        ")
-	fmt.Println(re.ReadByte())
+	//重设缓冲，丢弃缓冲中除前n字节数据外的其它数据，如果n小于零或者大于缓冲容量将panic。
+	// b.Truncate(0)
 
-	fmt.Print("    ReadRune(b)  读4byte字节数据                       ")
-	fmt.Println(re.ReadRune())
+	//缓冲未被读取的部分
+	fmt.Println(byteBuffer.Len())
 
-	fmt.Print("    UnreadByte() 撤销上一个读取的数据                  ")
-	fmt.Println(re.UnreadByte())
+	//返回未读取部分字节数据的切片
+	//	注意：如果中间没有调用其他方法，修改返回的切片的内容会直接改变Buffer的内容。
+	fmt.Println(byteBuffer.Bytes())
 
-	fmt.Println("Buffer")
-	fmt.Println("    一个实现了读写方法的可变大小的字节缓冲。本类型的零值是一个空的可用于读写的缓冲")
+	//将未读取部分的字节数据作为字符串返回
+	fmt.Println(byteBuffer.String())
 
-	bf := bytes.NewBuffer(data)
-	fmt.Print("    NewBuffer(b)   通过[]byte创建 Buffer               ")
-	fmt.Println(bf)
+	//读取 n Byte
+	byteBuffer.Read(n)
+	fmt.Println(n)
 
-	fmt.Println("    Reset()        重设缓冲，因此会丢弃全部内容，等价于b.Truncate(0)          ")
-	//bf.Reset()
+	//读取 byte
+	fmt.Println(byteBuffer.ReadByte())
 
-	fmt.Print("    Len()          返回缓冲中未读取部分的字节长度；b.Len() == len(b.Bytes())   ")
-	fmt.Println(bf.Len())
+	//撤销读取的上一个Byte数据(也就是说下一个读取的还是这个)
+	// fmt.Println(byteBuffer.UnreadByte())
 
-	fmt.Print("    Bytes()        返回未读取部分字节数据的切片；len(b.Bytes()) == b.Len()     ")
-	fmt.Println(bf.Bytes())
-	//fmt.Println("    	注意：如果中间没有调用其他方法，修改返回的切片的内容会直接改变Buffer的内容。")
+	//读取 n byte 数据
+	fmt.Println(byteBuffer.Next(2))
 
-	fmt.Print("    String()       将未读取部分的字节数据作为字符串返回        ")
-	fmt.Println(bf.String())
+	//读取 Rune(4字节)(主要读取是utf8字符串)
+	fmt.Println(byteBuffer.ReadRune())
 
-	fmt.Print("    Read(b)        读取b字节数据      ")
-	fmt.Println(bf.Read(read))
-	//fmt.Println("    	注意：返回值n是读取的字节数，除非缓冲中完全没有数据可以读取并写入p，此时返回值err为io.EOF；否则err总是nil。")
+	//撤销读取的上一个Rune数据(也就是说下一个读取的还是这个)
+	// fmt.Println(byteBuffer.UnreadRune())
 
-	fmt.Print("    ReadByte()     读取byte字节数据   ")
-	fmt.Println(bf.ReadByte())
+	//连续读取字节至delim停止
+	fmt.Println(byteBuffer.ReadBytes(10))
 
-	fmt.Print("    Next()         返回未读取部分前n字节数据的切片，并且移动读取位置  ")
-	fmt.Println(bf.Next(1))
+	//连续读取字节至delim停止(返回字符串)
+	fmt.Println(byteBuffer.ReadString(12))
 
-	fmt.Print("    UnreadByte()   撤销上一个读取byte的数据               ")
-	fmt.Println(bf.UnreadByte())
+	/*
+	 * Byte Buffer Write
+	 * 一个实现了读写方法的可变大小的字节缓冲。本类型的零值是一个空的可用于读写的缓冲
+	 */
 
-	fmt.Print("    ReadRune()     读取并返回缓冲中的下一个utf-8码值。    ")
-	fmt.Println(bf.ReadRune())
+	//写[]Byte缓冲，返回值n为len(p),缓冲过大会引发painc.
+	fmt.Println(byteBuffer.Write([]byte{21}))
 
-	fmt.Print("    UnreadRune()   撤销上一个读取Rune的数据               ")
-	fmt.Println(bf.UnreadRune())
+	//写[]Rune缓冲，返回值n为len(p),缓冲过大会引发painc.
+	fmt.Println(byteBuffer.WriteString("哈"))
 
-	fmt.Print("    ReadBytes()    连续读取至 第一次遇到delime字节 结束   ")
-	fmt.Println(bf.ReadBytes(5))
+	//写Byte缓冲，返回值n为len(p),缓冲过大会引发painc.
+	fmt.Println(byteBuffer.WriteByte(22))
 
-	fmt.Print("    ReadString()   连续读取至 第一次遇到delime字节 结束   ")
-	fmt.Println(bf.ReadString(7))
+	//写Rune缓冲，返回值n为len(p),缓冲过大会引发painc.
+	fmt.Println(byteBuffer.WriteRune(23))
 
-	fmt.Print("    Write(p)       将p的内容写入缓冲中，如必要会增加缓冲容量。返回值n为len(p),缓冲过大会引发painc  ")
-	fmt.Println(bf.Write([]byte{10, 11, 12}))
+	//r中读取数据直到结束并将读取的数据写入缓冲中，如必要会增加缓冲容量。
+	// byteBuffer.ReadFrom(r)
 
-	fmt.Print("    WriteString(s) 将s的内容写入缓冲中，如必要会增加缓冲容量。返回值n为len(p),缓冲过大会引发painc  ")
-	fmt.Println(bf.WriteString("1213141516"))
-
-	fmt.Print("    WriteByte(b)   将b的内容写入缓冲中，如必要会增加缓冲容量。返回值n为len(p),缓冲过大会引发painc  ")
-	fmt.Println(bf.WriteByte(1))
-
-	fmt.Print("    WriteRune(r)   将r的内容写入缓冲中，如必要会增加缓冲容量。返回值n为len(p),缓冲过大会引发painc  ")
-	fmt.Println(bf.WriteRune(1))
-
-	fmt.Println("    ReadFrom(io) ")
-	//fmt.Println(bf.ReadFrom(1))
-
-	fmt.Println("    WriteTo(io) ")
-	//fmt.Println(bf.WriteTo(1))
-
-	fmt.Println(bf.Bytes())
+	//WriteTo从缓冲中读取数据直到缓冲内没有数据或遇到错误，并将这些数据写入w
+	//fmt.Println(bf.WriteTo(w)
 }
