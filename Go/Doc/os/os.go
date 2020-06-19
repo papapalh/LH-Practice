@@ -107,5 +107,5 @@ func main() {
 	fileByCreate.WriteString("xxxx")
 
 	//从偏移值off写入字节数据
-	fmt.Println(fileByOpenFile.WriteAt([]byte{97, 103, 101, 32}, zz.Size()))
+	//fmt.Println(fileByOpenFile.WriteAt([]byte{97, 103, 101, 32}, 0))
 }
