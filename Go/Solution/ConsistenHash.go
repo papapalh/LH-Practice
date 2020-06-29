@@ -6,11 +6,6 @@ import (
 	"math/rand"
 )
 
-const (
-	//虚拟节点数量
-	virtualPosNum = 5
-)
-
 //服务端接口
 type ConsistentHashServer interface {
 	//添加主机节点
@@ -66,8 +61,8 @@ func (serverList *ServerList) addServer(server string) error {
 		return nil
 	}
 
-	//根据虚拟节点的数量，挂载节点
-	for i := 0; i < virtualPosNum; i++ {
+	//设置虚拟节点为5个，挂载节点
+	for i := 0; i < 5; i++ {
 
 		//哈希算法计算位置-这里随便算了一个随机数代替
 		pos := int(rand.Intn(100000))
@@ -82,7 +77,7 @@ func (serverList *ServerList) addServer(server string) error {
 }
 
 //一致哈希
-func main () {
+func main() {
 
 	//继承接口
 	var s ConsistentHashServer
