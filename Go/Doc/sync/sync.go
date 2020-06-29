@@ -18,7 +18,7 @@ func main() {
 	//RwMutexFunc()
 
 	//WaitGroup 处理一组线程的结束
-	//WaitGroupFunc()
+	WaitGroupFunc()
 }
 
 func OnceFunc() {
@@ -59,7 +59,6 @@ func RwMutexFunc() {
 
 			fmt.Println("RLock")
 
-
 			time.Sleep(time.Second)
 
 			//释放读锁
@@ -72,6 +71,8 @@ func RwMutexFunc() {
 }
 
 func WaitGroupFunc() {
+
+	//结构体为值传递，传入函数需要引用，请注意
 	var wg sync.WaitGroup
 
 	for i := 0; i < 5; i++ {
@@ -79,11 +80,12 @@ func WaitGroupFunc() {
 		wg.Add(1)
 
 		go func() {
-			time.Sleep(time.Second)
+			time.Sleep(time.Second * 20)
 			wg.Done()
 			fmt.Println("WaitGroup")
 		}()
 	}
 
+	//这个方法是堵塞的
 	wg.Wait()
 }
