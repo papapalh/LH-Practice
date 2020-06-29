@@ -1,4 +1,3 @@
-
 package main
 
 import (
@@ -6,16 +5,16 @@ import (
 	"sort"
 )
 
-type IntSlice []int
+type intSlice []int
 
-func (s IntSlice) Len() int { return len(s) }
-func (s IntSlice) Swap(i, j int) {
+func (s intSlice) Len() int { return len(s) }
+func (s intSlice) Swap(i, j int) {
 	s[i], s[j] = s[j], s[i]
-	}
-func (s IntSlice) Less(i, j int) bool { return s[i] < s[j] }
+}
+func (s intSlice) Less(i, j int) bool { return s[i] < s[j] }
 
 func main() {
 	a := []int{4, 3, 2, 1, 5, 9, 8, 7, 6}
 	sort.Sort(a)
-	fmt.Println("After sorted: ", a)
+	fmt.Println(a)
 }

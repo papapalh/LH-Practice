@@ -5,8 +5,6 @@ import (
 	"fmt"
 )
 
-const MinRead = 512
-
 //bytes包实现了操作[]byte的常用函数。本包的函数和strings包的函数相当类似。
 //byte = uint8
 //rune = int32
