@@ -31,7 +31,9 @@ func main() {
 	case 2:
 		client()
 	default:
-		fmt.Println("input error: t 【1:服务端 2:客户端】")
+		fmt.Println("input error:")
+		fmt.Println("    服务端: go run Go/TCP/TCP粘包.go -t 1")
+		fmt.Println("    客户端: go run Go/TCP/TCP粘包.go -t 2")
 	}
 }
 
