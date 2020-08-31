@@ -22,6 +22,13 @@ func main() {
 	fmt.Println(hammingDistance(1, 4))
 }
 
+/**
+ * 思路
+ *    逐位比较。
+ * 耗时
+ *    执行用时：0 ms, 在所有 Go 提交中击败了100.00%的用户
+ *    内存消耗：2 MB, 在所有 Go 提交中击败了100.00%的用户
+ */
 func hammingDistance(x int, y int) int {
 
 	res := 0
