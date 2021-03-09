@@ -7,10 +7,10 @@ import (
 )
 
 type ColorGroup struct {
-	ID     int      `json:"-"`                 //忽略该JSON字段
-	Name   string   `json:"myName"`            //正常JSON定义
-	Name2  string   `json:"myName2,omitempty"` //字段为空，则省略
-	Colors []string `json:",omitempty"`        //JSON为默认值，但是如果字段为空，则省略
+	ID     int      `json:"-"`                 //忽略该JSON字段(encode/decode都不出现这个字段)
+	Name   string   `json:"myName"`            //正常JSON定义(字段名为myName)
+	Name2  string   `json:"myName2,omitempty"` //字段为空，则省略(如果字段未定义，则encode/decode都不出现这个字段)
+	Colors []string `json:",omitempty"`        //JSON为默认值，但是如果字段为空，则省略(如果字段未定义，则encode/decode都不出现这个字段))
 }
 
 func main() {
