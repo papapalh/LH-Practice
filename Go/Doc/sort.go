@@ -5,15 +5,15 @@ import (
 	"sort"
 )
 
-//自定类型
-type Interface interface {
-	// Len方法返回集合中的元素个数
-	Len() int
-	// Less方法报告索引i的元素是否比索引j的元素小
-	Less(i, j int) bool
-	// Swap方法交换索引i和j的两个元素
-	Swap(i, j int)
-}
+////自定类型
+//type Interface interface {
+//	// Len方法返回集合中的元素个数
+//	Len() int
+//	// Less方法报告索引i的元素是否比索引j的元素小
+//	Less(i, j int) bool
+//	// Swap方法交换索引i和j的两个元素
+//	Swap(i, j int)
+//}
 
 //类型自定义(可以是[]int/[]string/[]struct...)
 type intSlice []int
