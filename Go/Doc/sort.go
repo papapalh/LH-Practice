@@ -43,7 +43,6 @@ func main() {
 	/*
 	 *	[]float64 类型
 	 */
-
 	//直接对 []float64 类型做排序
 	float64Sort := []float64{1.1, 3.3, 2.2, 1.1, 9.9, 8.8, 7.7, 6,6}
 	sort.Float64s(float64Sort)

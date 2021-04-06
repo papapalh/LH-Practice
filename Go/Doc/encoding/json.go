@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"strings"
 )
 
 type ColorGroup struct {
@@ -26,7 +25,6 @@ func main() {
 
 	// json_decode 解析json
 	group2 := ColorGroup{}
-	b := json.NewDecoder(strings.NewReader(string(a)))
-	b.Decode(&group2)
+	json.Unmarshal(a, &group2)
 	fmt.Println(group2)
 }
