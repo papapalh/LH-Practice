@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"strings"
 
 	//"time"
 )
@@ -30,10 +31,34 @@ func main() {
 
 //思路
 //	滑动窗口
+//	https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/solution/zhi-zeng-da-bu-jian-xiao-de-hua-dong-chuang-kou-10/
 //耗时
 //	执行用时： 348 ms , 在所有 Go 提交中击败了 6.53% 的用户
 //	内存消耗： 6.9 MB , 在所有 Go 提交中击败了 5.03% 的用户
 func lengthOfLongestSubstring(s string) int {
+
+	start, end := 0, 0
+
+	for i := 0; i < len(s); i++ {
+
+		index := strings.Index(s[start:i], string(s[i]))
+
+		if index == -1 {
+
+			if i + 1 > end {
+				end = i + 1
+			}
+			
+		} else {
+			start += index + 1
+			end += index + 1
+		}
+	}
+
+	return end - start
+}
+
+func lengthOfLongestSubstring2(s string) int {
 
 	var max float64 = 0
 
@@ -62,4 +87,3 @@ func lengthOfLongestSubstring(s string) int {
 
 	return int(max)
 }
-
