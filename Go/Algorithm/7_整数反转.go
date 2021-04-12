@@ -11,7 +11,8 @@
 package main
 
 import (
-	"fmt";
+	"fmt"
+	"math"
 )
 /**
  * 思路
@@ -31,28 +32,26 @@ func main() {
 
 func reverse(x int) int {
 
-	result := 0
-	flag := false
+	res := 0
+	isF := 0
 
 	if x < 0 {
+		isF = 1
 		x *= -1
-		flag = true
 	}
 
-    for ;x >= 1; {
-
-		result = (result * 10) + (x % 10)
-
-		x = x / 10
+	for x > 0 {
+		res = (x % 10) + res * 10
+		x /= 10
 	}
 
-	if result >= 2147483647 || result <= -2147483648  {
+	if res > math.MaxInt32 {
 		return 0
 	}
 
-	if flag {
-		result *= -1
+	if isF > 0 {
+		res *= -1
 	}
 
-	return result
+	return res
 }
