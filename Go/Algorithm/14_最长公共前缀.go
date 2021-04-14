@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 // 题目
@@ -72,4 +73,43 @@ func Min(x, y int) int {
 		return x
 	}
 	return y
+}
+
+//思路
+//	纵向扫描法
+//	纵向的比较每一个字符串，找到公共前缀
+//耗时
+//	执行用时： 0 ms , 在所有 Go 提交中击败了 100.00% 的用户
+//	内存消耗： 2.3 MB , 在所有 Go 提交中击败了 48.89% 的用户
+func longestCommonPrefix2(strs []string) string {
+
+	if len(strs) == 0 {
+		return ""
+	}
+
+	if len(strs) == 1 {
+		return strs[0]
+	}
+
+	res := strings.Builder{}
+
+	for index, value := range []byte(strs[0]) {
+
+		for i := 1; i < len(strs); i++ {
+
+			if index > len(strs[i]) - 1 {
+				goto skip
+			}
+
+			if strs[i][index] != value {
+				goto skip
+			}
+		}
+
+		res.Write([]byte{value})
+	}
+
+skip:
+
+	return res.String()
 }
