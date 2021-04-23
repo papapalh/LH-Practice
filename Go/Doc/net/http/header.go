@@ -18,7 +18,7 @@ func main() {
 	h.Set("l", "30")
 
 	//添加新的header
-	//   header不存在，则新建
+	//   header不存在,则新建
 	//   header存在,向后填充
 	h.Add("ll", "30")
 

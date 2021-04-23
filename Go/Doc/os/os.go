@@ -73,7 +73,7 @@ func main() {
 	fileByOpen, _ := os.Open(f)
 
 	//指定模式打开文件。大多数调用者都应用Open或Create代替本函数
-	fileByOpenFile, _ := os.OpenFile("/Users/lihong/Desktop/Data/360/lihong/Doc/main.go", os.O_RDWR, 0)
+	fileByOpenFile, _ := os.OpenFile("/Users/lihong/Desktop/Data/360/lihong/Doc/main.go", os.O_RDWR|os.O_APPEND, 0)
 
 	//获取文件基本信息(FileInfo)
 	fmt.Println(fileByOpenFile.Stat())
