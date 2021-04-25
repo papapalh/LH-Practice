@@ -19,5 +19,4 @@ func main() {
 
 	//默认客户端发发起post请求
 	http.Post("http://php.com/index.php", "application/x-www-form-urlencoded", strings.NewReader(""))
-
 }
