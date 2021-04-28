@@ -36,22 +36,36 @@ func main () {
 // 时间复杂度
 //     O(n)
 func isValid(s string) bool {
-	if len(s) == 0 {
-		return true
-	}
-	if len(s) % 2 == 1 {
+
+	if s == "" || string(s[0]) == ")" ||  string(s[0]) == "]" ||  string(s[0]) == "}" {
 		return false
 	}
 
-	stack := []byte{s[0]}
-
-	for i := 1; i < len(s); i++ {
-		if (s[i] == 41 && stack[len(stack)-1] == 40) || (s[i] == 125 && stack[len(stack)-1] == 123) || (s[i] == 93 && stack[len(stack)-1] == 91) {
-			stack = stack[:len(stack)-1]
-		} else {
-			stack = append(stack, s[i])
-		}
+	m := map[string]string{
+		"(":")",
+		"[":"]",
+		"{":"}",
 	}
 
-	return len(stack) == 0
+	track := []string{}
+
+	for _, v := range s {
+
+		v_s := string(v)
+
+		if v_s == "(" || v_s == "[" || v_s == "{" {
+			track = append(track, m[v_s])
+			continue
+		}
+
+		if len(track) == 0 {
+			return false
+		}
+		if v_s != track[len(track)-1] {
+			return false
+		}
+		track = track[:len(track)-1]
+	}
+
+	return len(track) == 0
 }
