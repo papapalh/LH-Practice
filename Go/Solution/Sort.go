@@ -17,9 +17,9 @@ import "fmt"
 
 func main() {
 	BubbleSort()
-	SelectSort()
-	InsertSort()
-	MergeSort()
+	SelectSort([]int{1,2,3,4})
+	InsertSort([]int{1, 11, 12, 4, 2, 6, 9, 0, 3, 7, 8, 2})
+	MergeSort([]int{1, 2, 4, 6, 8, 10}, []int{1, 3, 5, 7, 9})
 	QuickSort([]int{1, 2, 3, 4})
 	CountSort()
 	BucketSort()
@@ -37,18 +37,28 @@ func main() {
  *     持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较。
  */
 func BubbleSort() {
-	// 常规的冒泡排序，每个元素都与他的前一个元素作比较，时间复杂度O(N2)/最好O(N2)
+	// 常规的冒泡排序
+	// 每个元素都与他的前一个元素作比较
+	// 时间复杂度O(N2)/最好O(N2)
 	arr := [...]int{4, 1, 6, 2, 9, 6, 7, 8}
-	for i := 1; i < len(arr)-1; i++ {
+
+	//外层定义循环次数
+	for i := 0; i < len(arr)-1; i++ {
+
+		//内存定义冒泡顺序
 		for j := 0; j < len(arr)-1; j++ {
 			if arr[j] > arr[j+1] {
 				arr[j+1], arr[j] = arr[j], arr[j+1]
 			}
 		}
+
 	}
 	fmt.Println(arr)
 
-	// 改进，增加flag参数，使在有序的情况下，获得更好的执行效率，时间复杂度为O(N2)/最好为O(N)
+	// 改进
+	// 增加flag参数，使在有序的情况下，获得更好的执行效率。
+	// 在后面已经完全有序的情况下,减少计算
+	// 时间复杂度为O(N2)/最好为O(N)
 	arr2 := [...]int{4, 1, 6, 2, 9, 6, 7, 8}
 	for i := 1; i < len(arr2); i++ {
 		flag := 1
@@ -76,14 +86,14 @@ func BubbleSort() {
  *     再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。
  *     重复第二步，直到所有元素均排序完毕。
  */
-func SelectSort() {
-	arr := [...]int{1, 11, 12, 4, 2, 6, 9, 0, 3, 7, 8, 2}
-	newArr := []int{}            //新处理切片
+func SelectSort(arr []int) []int {
+
+	res := []int{}
 	repeat := map[int]struct{}{} //避免重复处理
 
 	for i := 0; i < len(arr)-1; i++ {
 
-		minkey := -999
+		minIndex := -999
 
 		for j := 0; j < len(arr)-1; j++ {
 
@@ -91,22 +101,22 @@ func SelectSort() {
 				continue
 			}
 
-			if minkey == -999 {
-				minkey = j
+			if minIndex == -999 {
+				minIndex = j
 				continue
 			}
 
-			if arr[minkey] > arr[j] {
-				minkey = j
+			if arr[minIndex] > arr[j] {
+				minIndex = j
 			}
 		}
 
-		repeat[minkey] = struct{}{}
+		repeat[minIndex] = struct{}{}
 
-		newArr = append(newArr, arr[minkey])
+		res = append(res, arr[minIndex])
 	}
 
-	fmt.Println(newArr)
+	return res
 }
 
 /**
@@ -120,13 +130,18 @@ func SelectSort() {
  *     从头到尾依次扫描未排序序列，将扫描到的每个元素插入有序序列的适当位置。
  *     如果待插入的元素与有序序列中的某个元素相等，则将待插入元素插入到相等元素的后面。
  */
-func InsertSort() {
-	arr := [...]int{1, 11, 12, 4, 2, 6, 9, 0, 3, 7, 8, 2}
+func InsertSort(arr []int) []int {
+	if len(arr) == 0 {
+		return arr
+	}
 
+	//外层确定循环次数(从1开始,前面默认为排好的)
 	for i := 1; i < len(arr); i++ {
 
+		//排好序的数据移动会导致I的值发生变化,所以使用临时变量保存
 		tmp := arr[i]
 
+		//内层移动数据(j代表的是已经排好序的数据)
 		for j := i - 1; j >= 0; j-- {
 
 			if arr[j] > tmp {
@@ -138,7 +153,7 @@ func InsertSort() {
 		}
 	}
 
-	fmt.Println(arr)
+	return arr
 }
 
 /**
@@ -149,9 +164,7 @@ func InsertSort() {
  *     比较两个数组的头元素，将比较小的数组头元素出栈，放入新数组
  *     一直循环这个数组，完成数组的排序
  */
-func MergeSort() {
-	arr1 := [...]int{1, 2, 4, 6, 8, 10}
-	arr2 := [...]int{1, 3, 5, 7, 9}
+func MergeSort(arr1, arr2 []int) []int {
 	arr := []int{}
 
 	leftPoint := 0
@@ -181,7 +194,7 @@ func MergeSort() {
 		}
 	}
 
-	fmt.Println(arr)
+	return arr
 }
 
 /**
@@ -194,7 +207,8 @@ func MergeSort() {
  *     之后再不停的递归对数列排序，直到最后一个。
  */
 func QuickSort(arr []int) []int {
-	//切片数量太少直接返回
+
+	//限界条件
 	if len(arr) <= 1 {
 		return arr
 	}
@@ -204,26 +218,18 @@ func QuickSort(arr []int) []int {
 	left := []int{}
 	right := []int{}
 
-	for i, v := range arr {
-
-		if i == 0 {
-			continue
-		}
-
-		if flag > v {
-			left = append(left, v)
+	for i := 1; i < len(arr); i++ {
+		if arr[i] > flag {
+			right = append(right, arr[i])
 		} else {
-			right = append(right, v)
+			left = append(left, arr[i])
 		}
 	}
 
-	left = QuickSort(left)
-	right = QuickSort(right)
-
 	res := []int{}
-	res = append(res, left...)
+	res = append(res, QuickSort(left)...)
 	res = append(res, flag)
-	res = append(res, right...)
+	res = append(res, QuickSort(right)...)
 
 	return res
 }
