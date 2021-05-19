@@ -50,10 +50,12 @@ func dfs(res *[][]int, depth int, used map[int]bool, node []int, nums []int) {
 
 		node = append(node, nums[i])
 		used[i] = true
+		depth++
 
-		dfs(res, depth + 1, used, node, nums)
+		dfs(res, depth, used, node, nums)
 
 		used[i] = false
 		node = node[:len(node)-1]
+		depth--
 	}
 }
